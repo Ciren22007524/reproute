@@ -1,0 +1,471 @@
+{
+  "version": 1,
+  "categories": [
+    {
+      "id": "free-weight",
+      "name": "自由重量"
+    },
+    {
+      "id": "rack-bench",
+      "name": "架與訓練椅"
+    },
+    {
+      "id": "machine-upper",
+      "name": "上肢器械"
+    },
+    {
+      "id": "machine-lower",
+      "name": "下肢器械"
+    },
+    {
+      "id": "cable",
+      "name": "纜繩器械"
+    },
+    {
+      "id": "cardio",
+      "name": "心肺器材"
+    },
+    {
+      "id": "accessory",
+      "name": "小器材與配件"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "dumbbell",
+      "name": "啞鈴",
+      "nameEn": "Dumbbells",
+      "category": "free-weight",
+      "hasWeightRange": true
+    },
+    {
+      "id": "olympic-barbell",
+      "name": "奧林匹克槓鈴",
+      "nameEn": "Olympic Barbell",
+      "category": "free-weight"
+    },
+    {
+      "id": "ez-bar",
+      "name": "EZ 彎曲槓",
+      "nameEn": "EZ Curl Bar",
+      "category": "free-weight"
+    },
+    {
+      "id": "fixed-barbell",
+      "name": "固定重量槓鈴",
+      "nameEn": "Fixed Barbell",
+      "category": "free-weight",
+      "hasWeightRange": true
+    },
+    {
+      "id": "trap-bar",
+      "name": "六角槓",
+      "nameEn": "Trap Bar",
+      "category": "free-weight"
+    },
+    {
+      "id": "kettlebell",
+      "name": "壺鈴",
+      "nameEn": "Kettlebells",
+      "category": "free-weight",
+      "hasWeightRange": true
+    },
+    {
+      "id": "weight-plate",
+      "name": "槓片",
+      "nameEn": "Weight Plates",
+      "category": "free-weight"
+    },
+    {
+      "id": "power-rack",
+      "name": "深蹲框（全框）",
+      "nameEn": "Power Rack",
+      "category": "rack-bench"
+    },
+    {
+      "id": "squat-rack",
+      "name": "深蹲架（半框）",
+      "nameEn": "Squat Rack",
+      "category": "rack-bench"
+    },
+    {
+      "id": "smith-machine",
+      "name": "史密斯機",
+      "nameEn": "Smith Machine",
+      "category": "rack-bench"
+    },
+    {
+      "id": "flat-bench-press",
+      "name": "臥推架（平板）",
+      "nameEn": "Flat Bench Press Station",
+      "category": "rack-bench"
+    },
+    {
+      "id": "incline-bench-press",
+      "name": "上斜臥推架",
+      "nameEn": "Incline Bench Press Station",
+      "category": "rack-bench"
+    },
+    {
+      "id": "decline-bench-press",
+      "name": "下斜臥推架",
+      "nameEn": "Decline Bench Press Station",
+      "category": "rack-bench"
+    },
+    {
+      "id": "flat-bench",
+      "name": "平板椅",
+      "nameEn": "Flat Bench",
+      "category": "rack-bench"
+    },
+    {
+      "id": "adjustable-bench",
+      "name": "可調式訓練椅",
+      "nameEn": "Adjustable Bench",
+      "category": "rack-bench"
+    },
+    {
+      "id": "preacher-bench",
+      "name": "牧師椅",
+      "nameEn": "Preacher Curl Bench",
+      "category": "rack-bench"
+    },
+    {
+      "id": "hyperextension",
+      "name": "羅馬椅（背伸展）",
+      "nameEn": "Hyperextension Bench",
+      "category": "rack-bench"
+    },
+    {
+      "id": "ghd",
+      "name": "GHD 臀腿訓練椅",
+      "nameEn": "Glute Ham Developer",
+      "category": "rack-bench"
+    },
+    {
+      "id": "dip-station",
+      "name": "雙槓撐體架",
+      "nameEn": "Dip Station",
+      "category": "rack-bench"
+    },
+    {
+      "id": "pull-up-bar",
+      "name": "引體向上架",
+      "nameEn": "Pull-up Bar",
+      "category": "rack-bench"
+    },
+    {
+      "id": "knee-raise-station",
+      "name": "懸垂抬腿架",
+      "nameEn": "Knee Raise Station",
+      "category": "rack-bench"
+    },
+    {
+      "id": "landmine",
+      "name": "地雷管",
+      "nameEn": "Landmine",
+      "category": "rack-bench"
+    },
+    {
+      "id": "lifting-platform",
+      "name": "舉重台",
+      "nameEn": "Lifting Platform",
+      "category": "rack-bench"
+    },
+    {
+      "id": "chest-press-machine",
+      "name": "坐姿推胸機",
+      "nameEn": "Chest Press Machine",
+      "category": "machine-upper"
+    },
+    {
+      "id": "incline-chest-press-machine",
+      "name": "上斜推胸機",
+      "nameEn": "Incline Chest Press Machine",
+      "category": "machine-upper"
+    },
+    {
+      "id": "pec-deck",
+      "name": "蝴蝶機（夾胸／反向飛鳥）",
+      "nameEn": "Pec Deck / Rear Delt Fly",
+      "category": "machine-upper"
+    },
+    {
+      "id": "shoulder-press-machine",
+      "name": "肩推機",
+      "nameEn": "Shoulder Press Machine",
+      "category": "machine-upper"
+    },
+    {
+      "id": "lateral-raise-machine",
+      "name": "側平舉機",
+      "nameEn": "Lateral Raise Machine",
+      "category": "machine-upper"
+    },
+    {
+      "id": "lat-pulldown",
+      "name": "滑輪下拉機",
+      "nameEn": "Lat Pulldown",
+      "category": "machine-upper"
+    },
+    {
+      "id": "seated-row-machine",
+      "name": "坐姿划船機",
+      "nameEn": "Seated Row Machine",
+      "category": "machine-upper"
+    },
+    {
+      "id": "plate-loaded-row",
+      "name": "掛片式划船機",
+      "nameEn": "Plate-loaded Row",
+      "category": "machine-upper"
+    },
+    {
+      "id": "t-bar-row",
+      "name": "T 槓划船機",
+      "nameEn": "T-Bar Row",
+      "category": "machine-upper"
+    },
+    {
+      "id": "assisted-pull-up",
+      "name": "輔助引體向上機",
+      "nameEn": "Assisted Pull-up / Dip Machine",
+      "category": "machine-upper"
+    },
+    {
+      "id": "biceps-curl-machine",
+      "name": "二頭彎舉機",
+      "nameEn": "Biceps Curl Machine",
+      "category": "machine-upper"
+    },
+    {
+      "id": "triceps-machine",
+      "name": "三頭伸展機",
+      "nameEn": "Triceps Extension Machine",
+      "category": "machine-upper"
+    },
+    {
+      "id": "leg-press",
+      "name": "腿推機",
+      "nameEn": "Leg Press",
+      "category": "machine-lower"
+    },
+    {
+      "id": "hack-squat",
+      "name": "哈克深蹲機",
+      "nameEn": "Hack Squat",
+      "category": "machine-lower"
+    },
+    {
+      "id": "pendulum-squat",
+      "name": "鐘擺深蹲機",
+      "nameEn": "Pendulum Squat",
+      "category": "machine-lower"
+    },
+    {
+      "id": "belt-squat",
+      "name": "腰帶深蹲機",
+      "nameEn": "Belt Squat",
+      "category": "machine-lower"
+    },
+    {
+      "id": "leg-extension",
+      "name": "腿伸展機",
+      "nameEn": "Leg Extension",
+      "category": "machine-lower"
+    },
+    {
+      "id": "seated-leg-curl",
+      "name": "坐姿腿彎舉機",
+      "nameEn": "Seated Leg Curl",
+      "category": "machine-lower"
+    },
+    {
+      "id": "lying-leg-curl",
+      "name": "俯臥腿彎舉機",
+      "nameEn": "Lying Leg Curl",
+      "category": "machine-lower"
+    },
+    {
+      "id": "hip-abduction",
+      "name": "髖外展機",
+      "nameEn": "Hip Abduction",
+      "category": "machine-lower"
+    },
+    {
+      "id": "hip-adduction",
+      "name": "髖內收機",
+      "nameEn": "Hip Adduction",
+      "category": "machine-lower"
+    },
+    {
+      "id": "hip-thrust-machine",
+      "name": "臀推機",
+      "nameEn": "Hip Thrust Machine",
+      "category": "machine-lower"
+    },
+    {
+      "id": "glute-kickback-machine",
+      "name": "後踢臀機",
+      "nameEn": "Glute Kickback Machine",
+      "category": "machine-lower"
+    },
+    {
+      "id": "standing-calf-raise",
+      "name": "站姿提踵機",
+      "nameEn": "Standing Calf Raise",
+      "category": "machine-lower"
+    },
+    {
+      "id": "seated-calf-raise",
+      "name": "坐姿提踵機",
+      "nameEn": "Seated Calf Raise",
+      "category": "machine-lower"
+    },
+    {
+      "id": "cable-crossover",
+      "name": "雙滑輪龍門架",
+      "nameEn": "Cable Crossover",
+      "category": "cable"
+    },
+    {
+      "id": "functional-trainer",
+      "name": "可調式雙滑輪（功能訓練機）",
+      "nameEn": "Functional Trainer",
+      "category": "cable"
+    },
+    {
+      "id": "single-cable",
+      "name": "單滑輪站",
+      "nameEn": "Single Cable Station",
+      "category": "cable"
+    },
+    {
+      "id": "treadmill",
+      "name": "跑步機",
+      "nameEn": "Treadmill",
+      "category": "cardio"
+    },
+    {
+      "id": "elliptical",
+      "name": "滑步機",
+      "nameEn": "Elliptical",
+      "category": "cardio"
+    },
+    {
+      "id": "upright-bike",
+      "name": "直立式飛輪／健身車",
+      "nameEn": "Upright Bike",
+      "category": "cardio"
+    },
+    {
+      "id": "recumbent-bike",
+      "name": "臥式健身車",
+      "nameEn": "Recumbent Bike",
+      "category": "cardio"
+    },
+    {
+      "id": "rowing-machine",
+      "name": "划船機（有氧）",
+      "nameEn": "Rowing Machine",
+      "category": "cardio"
+    },
+    {
+      "id": "stair-climber",
+      "name": "登階機",
+      "nameEn": "Stair Climber",
+      "category": "cardio"
+    },
+    {
+      "id": "ski-erg",
+      "name": "滑雪機",
+      "nameEn": "SkiErg",
+      "category": "cardio"
+    },
+    {
+      "id": "air-bike",
+      "name": "風扇車",
+      "nameEn": "Air Bike",
+      "category": "cardio"
+    },
+    {
+      "id": "cable-rope",
+      "name": "滑輪繩索握把",
+      "nameEn": "Cable Rope Attachment",
+      "category": "accessory"
+    },
+    {
+      "id": "cable-straight-bar",
+      "name": "滑輪直槓握把",
+      "nameEn": "Cable Straight Bar",
+      "category": "accessory"
+    },
+    {
+      "id": "cable-v-bar",
+      "name": "滑輪 V 型握把",
+      "nameEn": "Cable V-Bar",
+      "category": "accessory"
+    },
+    {
+      "id": "cable-d-handle",
+      "name": "滑輪單手握把",
+      "nameEn": "Cable D-Handle",
+      "category": "accessory"
+    },
+    {
+      "id": "ankle-strap",
+      "name": "腳踝綁帶",
+      "nameEn": "Ankle Strap",
+      "category": "accessory"
+    },
+    {
+      "id": "resistance-band",
+      "name": "彈力帶",
+      "nameEn": "Resistance Bands",
+      "category": "accessory"
+    },
+    {
+      "id": "medicine-ball",
+      "name": "藥球",
+      "nameEn": "Medicine Ball",
+      "category": "accessory",
+      "hasWeightRange": true
+    },
+    {
+      "id": "ab-wheel",
+      "name": "健腹輪",
+      "nameEn": "Ab Wheel",
+      "category": "accessory"
+    },
+    {
+      "id": "plyo-box",
+      "name": "跳箱",
+      "nameEn": "Plyo Box",
+      "category": "accessory"
+    },
+    {
+      "id": "battle-rope",
+      "name": "戰繩",
+      "nameEn": "Battle Rope",
+      "category": "accessory"
+    },
+    {
+      "id": "sled",
+      "name": "推雪橇",
+      "nameEn": "Sled",
+      "category": "accessory"
+    },
+    {
+      "id": "suspension-trainer",
+      "name": "懸吊訓練帶（TRX）",
+      "nameEn": "Suspension Trainer",
+      "category": "accessory"
+    },
+    {
+      "id": "foam-roller",
+      "name": "滾筒",
+      "nameEn": "Foam Roller",
+      "category": "accessory"
+    }
+  ]
+}

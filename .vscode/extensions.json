@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "vue.volar"
+  ],
+  "unwantedRecommendations": [
+    "octref.vetur"
+  ]
+}

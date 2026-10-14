@@ -147,3 +147,27 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Quasar
+.quasar
+/quasar.config.*.temporary.compiled*
+/src-cordova/node_modules
+/src-cordova/platforms
+/src-cordova/plugins
+/src-cordova/www
+/src-capacitor/www
+/src-capacitor/node_modules
+
+# Cloudflare / Wrangler
+.wrangler/
+.dev.vars
+.dev.vars.*
+
+# 個人訓練資料（不要 commit）
+data/personal/
+*.export.json
+
+# OS / editors
+.DS_Store
+.thumbs.db
+.idea/

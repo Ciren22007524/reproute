@@ -1,0 +1,40 @@
+{
+  "name": "reproute",
+  "version": "0.0.1",
+  "description": "個人健身課表 PWA：依廠區器材排課、器材被占用時自動重排或推薦替代動作",
+  "productName": "RepRoute",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "quasar dev -m pwa",
+    "build": "quasar build -m pwa",
+    "typecheck": "vue-tsc --noEmit && tsc -p worker/tsconfig.json",
+    "worker:dev": "pnpm build && wrangler dev",
+    "deploy": "pnpm build && wrangler deploy",
+    "postinstall": "quasar prepare --silent"
+  },
+  "dependencies": {
+    "@quasar/extras": "^2.1.0",
+    "dexie": "^4.4.6",
+    "hono": "^4.13.13",
+    "pinia": "^4.0.3",
+    "quasar": "^2.35.1",
+    "vue": "^3.5.44",
+    "vue-router": "^5.4.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261014.1",
+    "@quasar/app-vite": "^3.10.2",
+    "@types/node": "^22.19.11",
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.8",
+    "typescript": "^6.0.0",
+    "vue-tsc": "^3.3.13",
+    "workbox-build": "^7.4.1",
+    "wrangler": "^4.150.0"
+  },
+  "engines": {
+    "node": ">= 26 || ^24 || ^22.22.0"
+  }
+}
