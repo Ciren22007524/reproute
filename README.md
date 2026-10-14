@@ -6,7 +6,9 @@
 
 ## 技術棧
 
-Quasar（Vue 3 + TypeScript）PWA ・ Dexie（IndexedDB）・ Hono on Cloudflare Workers ・ pnpm
+Quasar（Vue 3 + TypeScript）PWA ・ Hono on Cloudflare Workers ・ pnpm
+
+資料採 local-first：IndexedDB（Dexie）為主要資料庫，有網路時同步到 Cloudflare D1 備份。
 
 ## 開發
 
