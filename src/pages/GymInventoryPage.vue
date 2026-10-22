@@ -3,7 +3,9 @@
     <div class="row items-center q-mb-sm">
       <div class="col">
         <div class="text-h6">{{ gym.name }}</div>
-        <div class="text-caption text-grey-7">已勾選 {{ ownedTotal }} / {{ equipment.length }} 項</div>
+        <div class="text-caption text-grey-7">
+          已勾選 {{ ownedTotal }} / {{ equipment.length }} 項
+        </div>
       </div>
       <q-btn flat dense icon="download" label="匯出" no-caps @click="exportJson" />
     </div>
@@ -52,7 +54,9 @@
                 :aria-label="`減少${item.name}`"
                 @click="setCount(item.id, countOf(item.id) - 1)"
               />
-              <div class="text-subtitle1 text-center" style="min-width: 24px">{{ countOf(item.id) }}</div>
+              <div class="text-subtitle1 text-center" style="min-width: 24px">
+                {{ countOf(item.id) }}
+              </div>
               <q-btn
                 round
                 flat
@@ -69,9 +73,7 @@
     </q-list>
   </q-page>
 
-  <q-page v-else-if="notFound" padding class="text-center text-grey-7">
-    找不到這個廠區
-  </q-page>
+  <q-page v-else-if="notFound" padding class="text-center text-grey-7"> 找不到這個廠區 </q-page>
 </template>
 
 <script setup lang="ts">
@@ -108,7 +110,9 @@ const groups = computed(() => {
       const items = all.filter(
         (e) =>
           (!onlyOwned.value || countOf(e.id) > 0) &&
-          (!keyword || e.name.toLowerCase().includes(keyword) || e.nameEn.toLowerCase().includes(keyword)),
+          (!keyword ||
+            e.name.toLowerCase().includes(keyword) ||
+            e.nameEn.toLowerCase().includes(keyword)),
       );
       return {
         category,

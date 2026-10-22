@@ -61,12 +61,16 @@ function addGym() {
     message: '例如：健身工廠 XX 廠',
     prompt: { model: '', type: 'text', isValid: (v: string) => v.trim().length > 0 },
     cancel: true,
-  }).onOk(async (name: string) => {
-    const now = Date.now();
-    const id = crypto.randomUUID();
-    await db.gyms.add({ id, name: name.trim(), inventory: {}, createdAt: now, updatedAt: now });
-    await router.push(`/gyms/${id}`);
+  }).onOk((name: string) => {
+    void createGym(name.trim());
   });
+}
+
+async function createGym(name: string) {
+  const now = Date.now();
+  const id = crypto.randomUUID();
+  await db.gyms.add({ id, name, inventory: {}, createdAt: now, updatedAt: now });
+  await router.push(`/gyms/${id}`);
 }
 
 function confirmDelete(gym: Gym) {
@@ -75,10 +79,14 @@ function confirmDelete(gym: Gym) {
     message: `確定要刪除「${gym.name}」以及它的清點結果嗎？`,
     cancel: true,
     ok: { label: '刪除', color: 'negative', flat: true },
-  }).onOk(async () => {
-    await db.gyms.delete(gym.id);
-    await load();
+  }).onOk(() => {
+    void deleteGym(gym.id);
   });
+}
+
+async function deleteGym(id: string) {
+  await db.gyms.delete(id);
+  await load();
 }
 
 onMounted(load);

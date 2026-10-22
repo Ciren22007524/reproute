@@ -1,0 +1,6 @@
+pnpm-lock.yaml
+src-pwa/pnpm-lock.yaml
+public/
+LICENSE
+# 內含 Quasar 的 <% %> 模板語法，Prettier 會弄壞
+index.html

@@ -3,7 +3,15 @@
     <div>
       <div style="font-size: 30vh">404</div>
       <div class="text-h5" style="opacity: 0.6">找不到這個頁面</div>
-      <q-btn class="q-mt-xl" color="white" text-color="primary" unelevated to="/" label="回首頁" no-caps />
+      <q-btn
+        class="q-mt-xl"
+        color="white"
+        text-color="primary"
+        unelevated
+        to="/"
+        label="回首頁"
+        no-caps
+      />
     </div>
   </div>
 </template>

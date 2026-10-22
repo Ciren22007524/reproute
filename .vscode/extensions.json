@@ -1,9 +1,12 @@
 {
   "recommendations": [
+    "vue.volar",
     "editorconfig.editorconfig",
-    "vue.volar"
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "usernamehw.errorlens",
+    "eamodio.gitlens",
+    "yoavbls.pretty-ts-errors"
   ],
-  "unwantedRecommendations": [
-    "octref.vetur"
-  ]
+  "unwantedRecommendations": ["octref.vetur"]
 }

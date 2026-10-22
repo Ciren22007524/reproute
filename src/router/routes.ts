@@ -21,7 +21,11 @@ const routes: RouteRecordRaw[] = [
         props: true,
         meta: { title: '器材清點', back: true },
       },
-      { path: 'history', component: () => import('@/pages/HistoryPage.vue'), meta: { title: '紀錄' } },
+      {
+        path: 'history',
+        component: () => import('@/pages/HistoryPage.vue'),
+        meta: { title: '紀錄' },
+      },
     ],
   },
 

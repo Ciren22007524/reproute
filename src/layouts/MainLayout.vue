@@ -19,7 +19,11 @@
       <router-view />
     </q-page-container>
 
-    <q-footer bordered class="bg-white text-grey-8" :class="{ 'bg-dark text-grey-4': $q.dark.isActive }">
+    <q-footer
+      bordered
+      class="bg-white text-grey-8"
+      :class="{ 'bg-dark text-grey-4': $q.dark.isActive }"
+    >
       <q-tabs
         no-caps
         dense
