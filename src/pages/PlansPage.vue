@@ -1,3 +1,4 @@
+<!-- 課表頁（/plans）。目前只顯示預告，v0.1 會實作：手動建立課表 -->
 <template>
   <q-page padding>
     <EmptyState

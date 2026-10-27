@@ -1,3 +1,4 @@
+<!-- 紀錄頁（/history）。目前只顯示預告，v0.3 會實作：訓練紀錄、估算 1RM 與建議重量 -->
 <template>
   <q-page padding>
     <EmptyState
