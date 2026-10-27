@@ -4,7 +4,6 @@
  * 所有讀寫 gyms 資料表的地方都經過這裡，頁面不直接碰 Dexie。
  * 之後做 D1 同步時，要在這裡把刪除改成軟刪除（標記 deletedAt）。
  */
-import { toRaw } from 'vue';
 import { db } from './index';
 import type { Gym } from '@/types/domain';
 
@@ -34,11 +33,13 @@ export async function createGym(name: string): Promise<Gym> {
 
 /**
  * 儲存整個廠區（新增或覆蓋）。
- * 傳進來的可能是 Vue 的 reactive proxy，IndexedDB 存不了 proxy，
- * 所以先用 toRaw 取出原始物件再深拷貝。
+ *
+ * 傳進來的物件可能含有 Vue 的 reactive proxy（而且不只最外層），
+ * IndexedDB 存不了 proxy；toRaw 只能解開最外層，所以改用 JSON 來回轉一次做深拷貝。
+ * Gym 只含字串、數字與純物件，JSON 不會遺失資料。
  */
 export async function saveGym(gym: Gym): Promise<void> {
-  await db.gyms.put(structuredClone(toRaw(gym)));
+  await db.gyms.put(JSON.parse(JSON.stringify(gym)) as Gym);
 }
 
 /** 刪除廠區與它的清點結果 */

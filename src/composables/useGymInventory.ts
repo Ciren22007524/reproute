@@ -3,15 +3,19 @@
  *
  * 計算規則都在 utils/inventory.ts，這裡只負責「狀態 + 存檔」。
  */
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, shallowRef } from 'vue';
 import { equipment } from '@/data/catalog';
 import { getGym, saveGym } from '@/db/gyms';
 import type { Gym, GymInventory } from '@/types/domain';
 import { ownedCount, parseMaxWeightKg, withCount, withMaxWeight } from '@/utils/inventory';
 
 export function useGymInventory(gymId: string) {
-  /** 目前的廠區；載入中或找不到時是 undefined */
-  const gym = ref<Gym>();
+  /**
+   * 目前的廠區；載入中或找不到時是 undefined。
+   * 用 shallowRef：每次修改都整個換成新物件（不在原物件上改），
+   * 內層就不會變成 Vue 的 proxy，存進 IndexedDB 時才不會出錯。
+   */
+  const gym = shallowRef<Gym>();
   /** 載入完成且確定沒有這個廠區 */
   const notFound = ref(false);
 
