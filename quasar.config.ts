@@ -40,9 +40,15 @@ export default defineConfig(() => {
     pwa: {
       workboxMode: 'GenerateSW',
       extendPWAGenerateSWOptions(cfg) {
-        // /api/* 交給 Hono，不要被 Service Worker 的 SPA fallback 攔截
-        cfg.navigateFallbackDenylist = [/^\/api\//];
+        // 這些路徑不能被 Service Worker 的 SPA fallback 攔截（攔截後會回傳快取的 index.html）：
+        // - /api/*：交給 Hono
+        // - /cdn-cgi/*：Cloudflare 自己的路徑，例如 Access 登入完成後的
+        //   /cdn-cgi/access/authorized（寫入登入 cookie）與 /cdn-cgi/access/logout
+        cfg.navigateFallbackDenylist = [/^\/api\//, /^\/cdn-cgi\//];
       },
+      // 網站在 Cloudflare Access 後面：讀 manifest.json 時要帶登入 cookie，
+      // 否則會被 Access 擋下，加到主畫面時拿不到 App 名稱與圖示
+      useCredentialsForManifestTag: true,
     },
   };
 });
