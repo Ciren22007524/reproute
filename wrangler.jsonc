@@ -18,9 +18,10 @@
   // 沒填時 /api/me 等需要登入的 API 一律回 500（不會變成公開）。
   // 換成自己的登入服務（docs/auth-service.md）時，只要改這幾個值。
   "vars": {
-    // Zero Trust → Settings → Custom Pages 或 General 的「Team domain」
-    "AUTH_ISSUER": "https://ciren22007524.cloudflareaccess.com",
-    "AUTH_JWKS_URL": "https://ciren22007524.cloudflareaccess.com/cdn-cgi/access/certs",
+    // Access 的 team domain。最可靠的確認方式：登入時網址列 state 參數裡的 authDomain，
+    // 或 Zero Trust → Settings → Custom Pages / General 的「Team domain」
+    "AUTH_ISSUER": "https://snowy-flower-d598.cloudflareaccess.com",
+    "AUTH_JWKS_URL": "https://snowy-flower-d598.cloudflareaccess.com/cdn-cgi/access/certs",
     // Zero Trust → Access → Applications → reproute → Overview 的「Application Audience (AUD) Tag」
     "AUTH_AUDIENCE": "c1299dedeba5a5a7f611a241cf1529e42e99f4bd0cfde2ce70cf7df549ed6c62",
     "AUTH_TOKEN_HEADER": "Cf-Access-Jwt-Assertion",
