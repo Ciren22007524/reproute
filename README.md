@@ -23,6 +23,7 @@ Quasar（Vue 3 + TypeScript）PWA ・ Hono on Cloudflare Workers ・ pnpm
 pnpm install
 pnpm dev            # 前端開發伺服器（Quasar，PWA 模式，port 9200）
 pnpm typecheck      # 前端 + Worker 型別檢查
+pnpm test           # 單元測試（目前是 Worker 的登入驗證）
 pnpm lint           # ESLint 檢查並自動修正
 pnpm format         # Prettier 排版所有檔案
 pnpm worker:dev     # 打包後用 Wrangler 在本機跑完整的 Worker（前端 + /api，port 8787）

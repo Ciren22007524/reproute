@@ -1,11 +1,9 @@
-import { Hono } from 'hono';
+/**
+ * Cloudflare Worker 的進入點。
+ * 只有 /api/* 會進到這裡（見 wrangler.jsonc 的 run_worker_first），路由定義在 app.ts。
+ */
+import { createApp } from './app';
 
-// 前端靜態檔由 wrangler.jsonc 的 assets 處理，這裡只接 /api/*
-const app = new Hono<{ Bindings: Env }>()
-  .basePath('/api')
-  .get('/health', (c) => c.json({ ok: true, service: 'reproute' }));
+export type { AppType } from './app';
 
-// 前端可用 hono/client 的 hc<AppType>() 取得有型別的 API client
-export type AppType = typeof app;
-
-export default app;
+export default createApp();
