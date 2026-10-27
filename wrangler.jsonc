@@ -19,8 +19,8 @@
   // 換成自己的登入服務（docs/auth-service.md）時，只要改這幾個值。
   "vars": {
     // Zero Trust → Settings → Custom Pages 或 General 的「Team domain」
-    "AUTH_ISSUER": "https://<team>.cloudflareaccess.com",
-    "AUTH_JWKS_URL": "https://<team>.cloudflareaccess.com/cdn-cgi/access/certs",
+    "AUTH_ISSUER": "https://ciren22007524.cloudflareaccess.com",
+    "AUTH_JWKS_URL": "https://ciren22007524.cloudflareaccess.com/cdn-cgi/access/certs",
     // Zero Trust → Access → Applications → reproute → Overview 的「Application Audience (AUD) Tag」
     "AUTH_AUDIENCE": "",
     "AUTH_TOKEN_HEADER": "Cf-Access-Jwt-Assertion",
