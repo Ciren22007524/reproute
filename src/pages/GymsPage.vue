@@ -8,7 +8,7 @@
       <GymListItem v-for="gym in gyms" :key="gym.id" :gym="gym" @delete="confirmDelete" />
     </q-list>
 
-    <ComingSoon
+    <EmptyState
       v-else
       icon="store"
       title="還沒有廠區"
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import ComingSoon from '@/components/ComingSoon.vue';
+import EmptyState from '@/components/common/EmptyState.vue';
 import GymListItem from '@/components/gym/GymListItem.vue';
 import { useGymList } from '@/composables/useGymList';
 

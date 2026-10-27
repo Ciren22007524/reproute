@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <ComingSoon
+    <EmptyState
       icon="insights"
       title="紀錄"
       description="v0.3 會在這裡顯示訓練紀錄、估算 1RM 與建議重量。"
@@ -9,5 +9,5 @@
 </template>
 
 <script setup lang="ts">
-import ComingSoon from '@/components/ComingSoon.vue';
+import EmptyState from '@/components/common/EmptyState.vue';
 </script>
