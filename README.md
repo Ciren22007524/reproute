@@ -37,7 +37,7 @@ pnpm wrangler login
 pnpm deploy       # quasar build + wrangler deploy
 ```
 
-部署後建議在 Cloudflare Zero Trust 為網域加上 **Access** 應用程式，只允許自己的 email 登入。
+部署後在 Worker 的 **Access** 分頁開啟 Cloudflare Access（Scope 選 **All traffic**），登入方式設為 **Google**，policy 只允許白名單內的帳號。詳細步驟見 [docs/requirements.md 的「登入與使用者」](docs/requirements.md#登入與使用者)。
 
 ## 流程圖
 
