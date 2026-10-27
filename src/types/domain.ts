@@ -30,11 +30,14 @@ export interface GymEquipment {
   note?: string;
 }
 
+/** 廠區的器材清點結果：key 是器材主清單的 id */
+export type GymInventory = Record<string, GymEquipment>;
+
 /** 一個廠區（分館）以及它的器材清點結果 */
 export interface Gym {
   id: string;
   name: string;
-  inventory: Record<string, GymEquipment>;
+  inventory: GymInventory;
   createdAt: number;
   updatedAt: number;
 }
