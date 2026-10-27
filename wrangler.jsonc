@@ -22,7 +22,7 @@
     "AUTH_ISSUER": "https://ciren22007524.cloudflareaccess.com",
     "AUTH_JWKS_URL": "https://ciren22007524.cloudflareaccess.com/cdn-cgi/access/certs",
     // Zero Trust → Access → Applications → reproute → Overview 的「Application Audience (AUD) Tag」
-    "AUTH_AUDIENCE": "",
+    "AUTH_AUDIENCE": "c1299dedeba5a5a7f611a241cf1529e42e99f4bd0cfde2ce70cf7df549ed6c62",
     "AUTH_TOKEN_HEADER": "Cf-Access-Jwt-Assertion",
   },
   // 之後需要同步紀錄時再開：
