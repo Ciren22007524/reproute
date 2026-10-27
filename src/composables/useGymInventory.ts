@@ -7,7 +7,7 @@ import { computed, onMounted, ref } from 'vue';
 import { equipment } from '@/data/catalog';
 import { getGym, saveGym } from '@/db/gyms';
 import type { Gym, GymInventory } from '@/types/domain';
-import { countOf, ownedCount, parseMaxWeightKg, withCount, withMaxWeight } from '@/utils/inventory';
+import { ownedCount, parseMaxWeightKg, withCount, withMaxWeight } from '@/utils/inventory';
 
 export function useGymInventory(gymId: string) {
   /** 目前的廠區；載入中或找不到時是 undefined */
@@ -34,11 +34,6 @@ export function useGymInventory(gymId: string) {
     await saveGym(gym.value);
   }
 
-  /** 某項器材目前的數量 */
-  function count(equipmentId: string) {
-    return countOf(inventory.value, equipmentId);
-  }
-
   /** 設定數量；設成 0 等於「這間沒有」 */
   function setCount(equipmentId: string, value: number) {
     return commit(withCount(inventory.value, equipmentId, value));
@@ -49,5 +44,5 @@ export function useGymInventory(gymId: string) {
     return commit(withMaxWeight(inventory.value, equipmentId, parseMaxWeightKg(value)));
   }
 
-  return { gym, notFound, inventory, ownedTotal, catalogTotal, count, setCount, setMaxWeight };
+  return { gym, notFound, inventory, ownedTotal, catalogTotal, setCount, setMaxWeight };
 }
