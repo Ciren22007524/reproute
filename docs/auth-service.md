@@ -36,7 +36,7 @@ flowchart LR
 |              | Access token                                | Refresh token                                                 |
 | ------------ | ------------------------------------------- | ------------------------------------------------------------- |
 | 格式         | JWT，用登入服務的私鑰簽章（ES256 或 EdDSA） | 隨機字串，只有登入服務看得懂                                  |
-| 效期         | 30 分鐘（可在 15～60 分鐘間調整）           | 30 天，**每次使用就換一個新的**（rotation）                   |
+| 效期         | 由環境變數設定（見下方「效期設定」）        | 由環境變數設定；**每次使用就換一個新的**（rotation）          |
 | 存放（網頁） | 記憶體                                      | HttpOnly、Secure、SameSite cookie，限定 `auth.cirenjhong.com` |
 | 誰驗證       | **各服務自己驗證**，用登入服務公開的金鑰    | 只有登入服務                                                  |
 | 撤銷         | 不能撤銷，靠短效期                          | 可以撤銷（登出、登出所有裝置）                                |
@@ -50,12 +50,47 @@ flowchart LR
   "aud": "reproute",
   "email": "user@gmail.com",
   "iat": 1700000000,
-  "exp": 1700001800
+  "exp": 1700000900
 }
 ```
 
 - `sub`：使用者 id，由登入服務產生，**永遠不變**；換登入平台或改 email 都不影響
 - `aud`：這個 token 給哪個服務用。每個服務只接受 `aud` 是自己的 token，A 服務的 token 不能拿去 B 服務用
+- `exp`：`iat` + `ACCESS_TOKEN_TTL_SECONDS`（範例為測試值 15 分鐘）
+
+### 效期設定（環境變數）
+
+效期不寫死在程式裡，放在登入服務 Worker 的環境變數，之後可以直接調整：
+
+| 環境變數                    | 意義                     | 測試值（目前）   | 正式目標           |
+| --------------------------- | ------------------------ | ---------------- | ------------------ |
+| `ACCESS_TOKEN_TTL_SECONDS`  | Access token 效期（秒）  | `900`（15 分鐘） | `86400`（1 天）    |
+| `REFRESH_TOKEN_TTL_SECONDS` | Refresh token 效期（秒） | `3600`（1 小時） | `2592000`（30 天） |
+
+**行為**
+
+- Refresh token 每次使用都換新的，新的 token 重新計算完整效期（滑動效期）。也就是說，**最後一次使用後超過 refresh 效期沒開 App，才需要重新登入**
+- 測試值下：閒置超過 1 小時就要重新登入；持續使用時每 15 分鐘換一次 access token，方便觀察換發流程
+- 正式值下：30 天內有開過 App 就不用重新登入；token 被偷時最多被用 1 天，而且可以用「登出所有裝置」撤銷 refresh token
+
+**放在哪裡**
+
+- 寫在登入服務的 `wrangler.jsonc` 的 `vars`（不是機密，不用放 Secrets），透過 PR 修改，有版本紀錄
+- 注意：在 Cloudflare 後台直接改的變數，**下次 `wrangler deploy` 會被 `wrangler.jsonc` 的值蓋掉**。要在後台改，必須在 `wrangler.jsonc` 設定 `"keep_vars": true`；建議統一改 `wrangler.jsonc`
+
+```jsonc
+// 登入服務的 wrangler.jsonc（之後建立）
+"vars": {
+  "ACCESS_TOKEN_TTL_SECONDS": "900",     // 測試：15 分鐘；正式：86400（1 天）
+  "REFRESH_TOKEN_TTL_SECONDS": "3600"    // 測試：1 小時；正式：2592000（30 天）
+}
+```
+
+**啟動時檢查**（避免設錯）
+
+- 兩個值都必須是正整數，否則使用預設的測試值並記錄警告
+- `REFRESH_TOKEN_TTL_SECONDS` 必須大於 `ACCESS_TOKEN_TTL_SECONDS`，否則 refresh token 沒有作用，視為設定錯誤
+- Access token 上限 1 天：access token 無法撤銷，設太長被偷時風險太大
 
 ## API
 
@@ -103,12 +138,12 @@ clients(id TEXT PK, name, redirect_uris JSON, created_at)            -- 註冊�
 
 依 Cloudflare 目前公布的免費額度估算，實際以[官方價格頁](https://developers.cloudflare.com/workers/platform/pricing/)為準。
 
-| 項目            | 免費額度（每天）  | 登入服務的用量                                                          |
-| --------------- | ----------------- | ----------------------------------------------------------------------- |
-| Workers request | 100,000 次        | 每位活躍使用者約 10 次（只有登入和換 token 時才會打到）；50 人約 500 次 |
-| Workers CPU     | 每個 request 10ms | 只做 JWT 簽章與驗證（WebCrypto），遠低於限制；不做密碼雜湊              |
-| D1 寫入         | 100,000 列        | 每次換 token 約 2 列；50 人約 1,000 列                                  |
-| D1 讀取         | 5,000,000 列      | 很少                                                                    |
+| 項目            | 免費額度（每天）  | 登入服務的用量                                                                                                    |
+| --------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Workers request | 100,000 次        | 只有登入和換 token 時才會打到。測試值（15 分鐘）每位活躍使用者約 10 次；正式值（1 天）約 1 次。50 人最多約 500 次 |
+| Workers CPU     | 每個 request 10ms | 只做 JWT 簽章與驗證（WebCrypto），遠低於限制；不做密碼雜湊                                                        |
+| D1 寫入         | 100,000 列        | 每次換 token 約 2 列；50 人約 1,000 列                                                                            |
+| D1 讀取         | 5,000,000 列      | 很少                                                                                                              |
 
 **省用量的原則**
 
@@ -116,7 +151,7 @@ clients(id TEXT PK, name, redirect_uris JSON, created_at)            -- 註冊�
 - 公開金鑰快取幾小時，不要每個 request 都抓
 - 前端只在 access token 快過期或收到 401 時才刷新，不用計時器定期刷新
 - Refresh token 存 **D1，不存 KV**：KV 免費方案每天只能寫 1,000 次
-- Access token 效期不要設太短，1 分鐘會讓刷新次數變成 30 倍
+- Access token 效期不要設太短，1 分鐘會讓刷新次數變成 15 分鐘時的 15 倍
 
 ## 技術選擇
 
