@@ -1,6 +1,6 @@
 # 集中式登入服務（auth service）設計
 
-> 狀態：**規劃中，尚未實作**。RepRoute 目前使用 Cloudflare Access + Google 登入（見 [requirements.md](requirements.md)）。
+> **已過時**：登入服務已實作在 [Ciren22007524/auth-service](https://github.com/Ciren22007524/auth-service)，以該 repo 的 `docs/design.md` 為準。這份保留作為早期規劃的紀錄。
 
 ## 目標
 

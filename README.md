@@ -2,7 +2,7 @@
 
 個人健身課表 PWA：依廠區器材排課，器材被占用時自動重排或推薦替代動作。
 
-需求與規劃見 [docs/requirements.md](docs/requirements.md)。
+需求與規劃見 [docs/requirements.md](docs/requirements.md)，目前進度與下一步見 [docs/STATUS.md](docs/STATUS.md)，已做的決定見 [docs/decisions.md](docs/decisions.md)。
 
 ## 技術棧
 
