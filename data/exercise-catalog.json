@@ -1,0 +1,225 @@
+[
+  {
+    "id": "push-up",
+    "name": "伏地挺身",
+    "nameEn": "Push-up",
+    "pattern": "水平推",
+    "primaryMuscles": ["胸肌"],
+    "secondaryMuscles": ["肱三頭肌", "前三角肌"],
+    "equipment": [[]],
+    "alternatives": ["dumbbell-bench-press", "barbell-bench-press", "machine-chest-press"]
+  },
+  {
+    "id": "dumbbell-bench-press",
+    "name": "啞鈴臥推",
+    "nameEn": "Dumbbell bench press",
+    "pattern": "水平推",
+    "primaryMuscles": ["胸肌"],
+    "secondaryMuscles": ["肱三頭肌", "前三角肌"],
+    "equipment": [
+      ["dumbbell", "flat-bench"],
+      ["dumbbell", "adjustable-bench"]
+    ],
+    "alternatives": ["push-up", "barbell-bench-press", "machine-chest-press"]
+  },
+  {
+    "id": "barbell-bench-press",
+    "name": "槓鈴臥推",
+    "nameEn": "Barbell bench press",
+    "pattern": "水平推",
+    "primaryMuscles": ["胸肌"],
+    "secondaryMuscles": ["肱三頭肌", "前三角肌"],
+    "equipment": [["olympic-barbell", "weight-plate", "flat-bench-press"]],
+    "alternatives": ["push-up", "dumbbell-bench-press", "machine-chest-press"]
+  },
+  {
+    "id": "machine-chest-press",
+    "name": "機械推胸",
+    "nameEn": "Machine chest press",
+    "pattern": "水平推",
+    "primaryMuscles": ["胸肌"],
+    "secondaryMuscles": ["肱三頭肌", "前三角肌"],
+    "equipment": [["chest-press-machine"]],
+    "alternatives": ["push-up", "dumbbell-bench-press", "barbell-bench-press"]
+  },
+  {
+    "id": "dumbbell-shoulder-press",
+    "name": "站姿啞鈴肩推",
+    "nameEn": "Standing dumbbell shoulder press",
+    "pattern": "垂直推",
+    "primaryMuscles": ["三角肌"],
+    "secondaryMuscles": ["肱三頭肌"],
+    "equipment": [["dumbbell"]],
+    "alternatives": ["machine-shoulder-press"]
+  },
+  {
+    "id": "machine-shoulder-press",
+    "name": "機械肩推",
+    "nameEn": "Machine shoulder press",
+    "pattern": "垂直推",
+    "primaryMuscles": ["三角肌"],
+    "secondaryMuscles": ["肱三頭肌"],
+    "equipment": [["shoulder-press-machine"]],
+    "alternatives": ["dumbbell-shoulder-press"]
+  },
+  {
+    "id": "pull-up",
+    "name": "引體向上",
+    "nameEn": "Pull-up",
+    "pattern": "垂直拉",
+    "primaryMuscles": ["背闊肌"],
+    "secondaryMuscles": ["肱二頭肌"],
+    "equipment": [["pull-up-bar"]],
+    "alternatives": ["lat-pulldown", "assisted-pull-up"]
+  },
+  {
+    "id": "lat-pulldown",
+    "name": "滑輪下拉",
+    "nameEn": "Lat pulldown",
+    "pattern": "垂直拉",
+    "primaryMuscles": ["背闊肌"],
+    "secondaryMuscles": ["肱二頭肌"],
+    "equipment": [["lat-pulldown"]],
+    "alternatives": ["pull-up", "assisted-pull-up"]
+  },
+  {
+    "id": "assisted-pull-up",
+    "name": "輔助引體向上",
+    "nameEn": "Assisted pull-up",
+    "pattern": "垂直拉",
+    "primaryMuscles": ["背闊肌"],
+    "secondaryMuscles": ["肱二頭肌"],
+    "equipment": [["assisted-pull-up"]],
+    "alternatives": ["pull-up", "lat-pulldown"]
+  },
+  {
+    "id": "machine-row",
+    "name": "坐姿機械划船",
+    "nameEn": "Seated machine row",
+    "pattern": "水平拉",
+    "primaryMuscles": ["背闊肌", "菱形肌"],
+    "secondaryMuscles": ["肱二頭肌", "後三角肌"],
+    "equipment": [["seated-row-machine"]],
+    "alternatives": ["dumbbell-row"]
+  },
+  {
+    "id": "dumbbell-row",
+    "name": "單臂啞鈴划船",
+    "nameEn": "One-arm dumbbell row",
+    "pattern": "水平拉",
+    "primaryMuscles": ["背闊肌", "菱形肌"],
+    "secondaryMuscles": ["肱二頭肌", "後三角肌"],
+    "equipment": [
+      ["dumbbell", "flat-bench"],
+      ["dumbbell", "adjustable-bench"]
+    ],
+    "alternatives": ["machine-row"]
+  },
+  {
+    "id": "bodyweight-squat",
+    "name": "徒手深蹲",
+    "nameEn": "Bodyweight squat",
+    "pattern": "蹲",
+    "primaryMuscles": ["股四頭肌", "臀大肌"],
+    "secondaryMuscles": [],
+    "equipment": [[]],
+    "alternatives": ["goblet-squat", "barbell-squat"]
+  },
+  {
+    "id": "goblet-squat",
+    "name": "高腳杯深蹲",
+    "nameEn": "Goblet squat",
+    "pattern": "蹲",
+    "primaryMuscles": ["股四頭肌", "臀大肌"],
+    "secondaryMuscles": ["核心"],
+    "equipment": [["dumbbell"], ["kettlebell"]],
+    "alternatives": ["bodyweight-squat", "barbell-squat"]
+  },
+  {
+    "id": "barbell-squat",
+    "name": "槓鈴背蹲",
+    "nameEn": "Barbell back squat",
+    "pattern": "蹲",
+    "primaryMuscles": ["股四頭肌", "臀大肌"],
+    "secondaryMuscles": ["核心"],
+    "equipment": [
+      ["olympic-barbell", "weight-plate", "power-rack"],
+      ["olympic-barbell", "weight-plate", "squat-rack"]
+    ],
+    "alternatives": ["bodyweight-squat", "goblet-squat"]
+  },
+  {
+    "id": "dumbbell-rdl",
+    "name": "啞鈴羅馬尼亞硬舉",
+    "nameEn": "Dumbbell Romanian deadlift",
+    "pattern": "髖鉸鏈",
+    "primaryMuscles": ["腿後肌群", "臀大肌"],
+    "secondaryMuscles": ["豎脊肌"],
+    "equipment": [["dumbbell"]],
+    "alternatives": ["barbell-rdl"]
+  },
+  {
+    "id": "barbell-rdl",
+    "name": "槓鈴羅馬尼亞硬舉",
+    "nameEn": "Barbell Romanian deadlift",
+    "pattern": "髖鉸鏈",
+    "primaryMuscles": ["腿後肌群", "臀大肌"],
+    "secondaryMuscles": ["豎脊肌"],
+    "equipment": [["olympic-barbell", "weight-plate"]],
+    "alternatives": ["dumbbell-rdl"]
+  },
+  {
+    "id": "dumbbell-curl",
+    "name": "啞鈴二頭彎舉",
+    "nameEn": "Dumbbell biceps curl",
+    "pattern": "肘屈",
+    "primaryMuscles": ["肱二頭肌"],
+    "secondaryMuscles": ["肱肌"],
+    "equipment": [["dumbbell"]],
+    "alternatives": ["machine-curl"]
+  },
+  {
+    "id": "machine-curl",
+    "name": "機械二頭彎舉",
+    "nameEn": "Machine biceps curl",
+    "pattern": "肘屈",
+    "primaryMuscles": ["肱二頭肌"],
+    "secondaryMuscles": ["肱肌"],
+    "equipment": [["biceps-curl-machine"]],
+    "alternatives": ["dumbbell-curl"]
+  },
+  {
+    "id": "rope-pushdown",
+    "name": "滑輪繩索下壓",
+    "nameEn": "Cable rope triceps pushdown",
+    "pattern": "肘伸",
+    "primaryMuscles": ["肱三頭肌"],
+    "secondaryMuscles": [],
+    "equipment": [
+      ["single-cable", "cable-rope"],
+      ["functional-trainer", "cable-rope"],
+      ["cable-crossover", "cable-rope"]
+    ],
+    "alternatives": ["machine-triceps"]
+  },
+  {
+    "id": "machine-triceps",
+    "name": "機械三頭伸展",
+    "nameEn": "Machine triceps extension",
+    "pattern": "肘伸",
+    "primaryMuscles": ["肱三頭肌"],
+    "secondaryMuscles": [],
+    "equipment": [["triceps-machine"]],
+    "alternatives": ["rope-pushdown"]
+  },
+  {
+    "id": "plank",
+    "name": "棒式",
+    "nameEn": "Plank",
+    "pattern": "核心穩定",
+    "primaryMuscles": ["核心"],
+    "secondaryMuscles": [],
+    "equipment": [[]],
+    "alternatives": []
+  }
+]

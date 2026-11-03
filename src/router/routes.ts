@@ -22,6 +22,11 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', component: () => import('@/pages/TodayPage.vue'), meta: { title: '今日訓練' } },
       { path: 'plans', component: () => import('@/pages/PlansPage.vue'), meta: { title: '課表' } },
+      {
+        path: 'plans/exercises',
+        component: () => import('@/pages/ExercisesPage.vue'),
+        meta: { title: '動作資料庫', back: true },
+      },
       { path: 'gyms', component: () => import('@/pages/GymsPage.vue'), meta: { title: '廠區' } },
       {
         path: 'gyms/:id',
