@@ -56,5 +56,5 @@ export function useGymList() {
     await reload();
   }
 
-  return { gyms, addGym, confirmDelete };
+  return { gyms, addGym, confirmDelete, reload };
 }

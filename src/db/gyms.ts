@@ -31,6 +31,20 @@ export async function createGym(name: string): Promise<Gym> {
   return gym;
 }
 
+/** 備份一律以新 id 匯入，避免同 id 或同名廠區被意外覆蓋。 */
+export async function importGymCopy(source: Gym): Promise<Gym> {
+  const now = Date.now();
+  const gym: Gym = {
+    id: crypto.randomUUID(),
+    name: `${source.name}（匯入）`,
+    inventory: JSON.parse(JSON.stringify(source.inventory)) as Gym['inventory'],
+    createdAt: now,
+    updatedAt: now,
+  };
+  await db.gyms.add(gym);
+  return gym;
+}
+
 /**
  * 儲存整個廠區（新增或覆蓋）。
  *
