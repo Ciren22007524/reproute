@@ -7,12 +7,19 @@
  */
 import Dexie, { type EntityTable } from 'dexie';
 import type { Gym } from '@/types/domain';
+import type { TrainingPlan } from '@/types/plan';
 
 export const db = new Dexie('reproute') as Dexie & {
   gyms: EntityTable<Gym, 'id'>;
+  plans: EntityTable<TrainingPlan, 'id'>;
 };
 
 // 資料表與索引。之後改結構時要新增 db.version(2)，不能直接改這裡。
 db.version(1).stores({
   gyms: 'id, name, updatedAt',
+});
+
+// 新增課表資料表，保留 version(1) 的廠區資料與索引。
+db.version(2).stores({
+  plans: 'id, updatedAt',
 });

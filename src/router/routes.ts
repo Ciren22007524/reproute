@@ -29,6 +29,12 @@ const routes: RouteRecordRaw[] = [
       },
       { path: 'gyms', component: () => import('@/pages/GymsPage.vue'), meta: { title: '廠區' } },
       {
+        path: 'plans/:id',
+        component: () => import('@/pages/PlanEditorPage.vue'),
+        props: true,
+        meta: { title: '編輯課表', back: true },
+      },
+      {
         path: 'gyms/:id',
         component: () => import('@/pages/GymInventoryPage.vue'),
         // 把網址的 :id 當成頁面的 props.id 傳進去
