@@ -46,7 +46,7 @@ export async function verifyAccessToken(
       audience: config.audience,
       algorithms: ALLOWED_ALGORITHMS,
       clockTolerance: CLOCK_TOLERANCE_SECONDS,
-      requiredClaims: ['sub', 'exp'],
+      requiredClaims: ['sub', 'email', 'iat', 'exp'],
     }));
   } catch (error) {
     if (error instanceof errors.JOSEError) {
@@ -55,7 +55,11 @@ export async function verifyAccessToken(
     throw error;
   }
 
-  const email = typeof payload.email === 'string' ? payload.email : '';
+  if (typeof payload.email !== 'string' || !payload.email.trim())
+    throw new AuthError('invalid email');
+  if (typeof payload.iat !== 'number' || !Number.isFinite(payload.iat))
+    throw new AuthError('invalid iat');
+  const email = payload.email;
   // sub 一定存在（requiredClaims），但型別上還是 string | undefined
   if (!payload.sub) throw new AuthError('missing sub');
   return { id: payload.sub, email };

@@ -14,17 +14,13 @@
   "observability": {
     "enabled": true,
   },
-  // 登入驗證（見 worker/auth/）。不是機密，但每個 Cloudflare 帳號不同。
-  // 沒填時 /api/me 等需要登入的 API 一律回 500（不會變成公開）。
-  // 換成自己的登入服務（docs/auth-service.md）時，只要改這幾個值。
+  // 正式站需由使用者在 Cloudflare 設定 reproute.cirenjhong.com，並完成 Access 切換。
+  // 缺少設定時受保護 API 一律拒絕請求。
   "vars": {
-    // Access 的 team domain。最可靠的確認方式：登入時網址列 state 參數裡的 authDomain，
-    // 或 Zero Trust → Settings → Custom Pages / General 的「Team domain」
-    "AUTH_ISSUER": "https://snowy-flower-d598.cloudflareaccess.com",
-    "AUTH_JWKS_URL": "https://snowy-flower-d598.cloudflareaccess.com/cdn-cgi/access/certs",
-    // Zero Trust → Access → Applications → reproute → Overview 的「Application Audience (AUD) Tag」
-    "AUTH_AUDIENCE": "c1299dedeba5a5a7f611a241cf1529e42e99f4bd0cfde2ce70cf7df549ed6c62",
-    "AUTH_TOKEN_HEADER": "Cf-Access-Jwt-Assertion",
+    "AUTH_ISSUER": "https://auth.cirenjhong.com",
+    "AUTH_JWKS_URL": "https://auth.cirenjhong.com/jwks",
+    "AUTH_AUDIENCE": "reproute",
+    "AUTH_TOKEN_HEADER": "Authorization",
   },
   // 之後需要同步紀錄時再開：
   // "d1_databases": [{ "binding": "DB", "database_name": "reproute", "database_id": "<填入>" }]
