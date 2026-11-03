@@ -20,6 +20,11 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     component: () => import('@/layouts/MainLayout.vue'),
     children: [
+      {
+        path: 'auth/callback',
+        component: () => import('@/pages/AuthCallbackPage.vue'),
+        meta: { title: '登入' },
+      },
       { path: '', component: () => import('@/pages/TodayPage.vue'), meta: { title: '今日訓練' } },
       { path: 'plans', component: () => import('@/pages/PlansPage.vue'), meta: { title: '課表' } },
       { path: 'gyms', component: () => import('@/pages/GymsPage.vue'), meta: { title: '廠區' } },

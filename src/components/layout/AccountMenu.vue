@@ -3,13 +3,13 @@
   資料來自 useCurrentUser（/api/me）。
 -->
 <template>
-  <q-btn flat round dense :aria-label="buttonLabel">
+  <q-btn class="tap-target" flat round dense :aria-label="buttonLabel">
     <q-avatar v-if="user" size="32px" color="white" text-color="primary">
       {{ initial }}
     </q-avatar>
     <q-icon v-else name="account_circle" />
 
-    <q-menu anchor="bottom right" self="top right">
+    <q-menu v-model="menuOpen" anchor="bottom right" self="top right">
       <q-list style="min-width: 220px">
         <q-item>
           <q-item-section avatar><q-icon name="account_circle" /></q-item-section>
@@ -21,12 +21,39 @@
 
         <q-separator />
 
-        <!-- 登入過期時，重新整理整頁會讓 Cloudflare Access 帶去登入頁 -->
-        <q-item v-if="status === 'expired'" v-close-popup clickable @click="reloadPage">
+        <q-item
+          v-if="status !== 'signed-in' && status !== 'loading'"
+          class="tap-target"
+          clickable
+          @click="
+            menuOpen = false;
+            login();
+          "
+        >
           <q-item-section avatar><q-icon name="login" /></q-item-section>
-          <q-item-section>重新登入</q-item-section>
+          <q-item-section>登入</q-item-section>
         </q-item>
-        <q-item v-else v-close-popup clickable @click="refresh">
+        <q-item
+          v-if="status === 'signed-in' || status === 'logout-failed'"
+          class="tap-target"
+          clickable
+          @click="
+            menuOpen = false;
+            signOut();
+          "
+        >
+          <q-item-section avatar><q-icon name="logout" /></q-item-section>
+          <q-item-section>{{ status === 'logout-failed' ? '重試登出' : '登出' }}</q-item-section>
+        </q-item>
+        <q-item
+          v-if="status !== 'signed-out' && status !== 'logout-failed'"
+          class="tap-target"
+          clickable
+          @click="
+            menuOpen = false;
+            refresh();
+          "
+        >
           <q-item-section avatar><q-icon name="refresh" /></q-item-section>
           <q-item-section>重新確認登入狀態</q-item-section>
         </q-item>
@@ -36,10 +63,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, shallowRef } from 'vue';
 import { useCurrentUser } from '@/composables/useCurrentUser';
 
-const { user, status, refresh } = useCurrentUser();
+const menuOpen = shallowRef(false);
+
+const { user, status, refresh, login, signOut } = useCurrentUser();
 
 /** email 的第一個字母，顯示在頭像裡 */
 const initial = computed(() => user.value?.email.charAt(0).toUpperCase() || '?');
@@ -52,16 +81,16 @@ const statusText = computed(() => {
       return '已登入';
     case 'offline':
       return user.value ? '離線中（顯示上次登入的帳號）' : '離線中';
+    case 'signed-out':
+      return '已登出';
+    case 'logout-failed':
+      return '本機已登出，遠端登出失敗，請重試';
     case 'expired':
       return '登入已過期';
     default:
-      return '無法取得登入資訊';
+      return '無法取得登入資訊，請確認服務與網址後重試';
   }
 });
 
 const buttonLabel = computed(() => (user.value ? `帳號：${user.value.email}` : '帳號'));
-
-function reloadPage() {
-  window.location.reload();
-}
 </script>
