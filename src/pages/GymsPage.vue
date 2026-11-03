@@ -4,6 +4,7 @@
 -->
 <template>
   <q-page padding>
+    <GymImport @imported="reload" />
     <q-list v-if="gyms.length" bordered separator class="rounded-borders">
       <GymListItem v-for="gym in gyms" :key="gym.id" :gym="gym" @delete="confirmDelete" />
     </q-list>
@@ -24,7 +25,8 @@
 <script setup lang="ts">
 import EmptyState from '@/components/common/EmptyState.vue';
 import GymListItem from '@/components/gym/GymListItem.vue';
+import GymImport from '@/components/gym/GymImport.vue';
 import { useGymList } from '@/composables/useGymList';
 
-const { gyms, addGym, confirmDelete } = useGymList();
+const { gyms, addGym, confirmDelete, reload } = useGymList();
 </script>
