@@ -17,3 +17,4 @@
 | 2026-10-27 | 登入改用自己的 `auth-service`，正式站不再用 Cloudflare Access                                   | 使用者不希望別人看出服務架在 Cloudflare 上（Access 的網址與 Google 同意畫面會露出）                 | Access + 自訂網域與 Instant Auth                    |
 | 2026-10-29 | 分支一律 `feature-<描述>`，從 `main` 開、PR 合併回來                                            | 使用者指定的流程                                                                                    | `feat/`、`docs/`、`fix/` 等前綴                     |
 | 2026-11-02 | 共同規則寫在 `AGENTS.md`，`CLAUDE.md` 只匯入；規則由 Claude Code 維護；格式與 auth-service 一致 | 使用者同時用 Claude Code 與 Codex，兩邊讀同一份規則才不會產出不同風格                               | `CLAUDE.md` 與 `AGENTS.md` 各寫一份（久了會不一致） |
+| 2026-11-04 | 手動課表同時支援單堂與多日，建立時由使用者選擇                                                  | 使用者明確要求兩種模式都做；共用動作與目標編輯模型                                                  | 只支援單堂或只支援多日                              |
