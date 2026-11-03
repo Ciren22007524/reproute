@@ -40,6 +40,11 @@ pnpm deploy       # quasar build + wrangler deploy
 
 部署後在 Worker 的 **Access** 分頁開啟 Cloudflare Access（Scope 選 **All traffic**），登入方式設為 **Google**，policy 只允許白名單內的帳號。詳細步驟見 [docs/requirements.md 的「登入與使用者」](docs/requirements.md#登入與使用者)。
 
+## 備份與動作查詢
+
+- 廠區清點頁可匯出 JSON；廠區清單的「匯入廠區備份」可預覽並還原成新副本，不覆蓋原有廠區。
+- 「課表 → 瀏覽動作資料庫」提供 21 個內建動作，可搜尋名稱／肌群、篩選動作模式及廠區器材，查看器材與替代動作。資料說明見 [docs/exercises.md](docs/exercises.md)。
+
 ## 流程圖
 
 ### 請求怎麼走

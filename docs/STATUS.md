@@ -2,27 +2,26 @@
 
 > 更新：2026-11-03。每次工作告一段落時更新這份文件；新的 session 先讀這份和 `AGENTS.md`（Claude Code 與 Codex 共用的規則）。
 
-**現況：已部署，只有「廠區器材清點」可以用。** 下一步是改用自己的登入服務（`auth-service`），之後才回到功能開發。
+**目前已合併：廠區器材清點與 JSON 匯出／匯入。** 動作資料庫已完成開發與本機驗證；正式部署結果尚未確認。新登入流程另見 PR #8，尚未切換。
 
 ## 進行中
 
 開始工作時加一列，合併前移除，避免 Claude Code 與 Codex 同時做同一件事（規則見 `AGENTS.md`「多個 AI 工具一起開發」）。
 
-| 分支                     | 工具  | 在做什麼                                            |
-| ------------------------ | ----- | --------------------------------------------------- |
-| feature-auth-service     | Codex | PR #8：登入串接待 Cloudflare 建置診斷與正式設定驗收 |
-| feature-exercise-catalog | Codex | 21 個內建動作、器材篩選與替代動作查詢               |
+| 分支                 | 工具  | 在做什麼                                            |
+| -------------------- | ----- | --------------------------------------------------- |
+| feature-auth-service | Codex | PR #8：登入串接待 Cloudflare 建置診斷與正式設定驗收 |
 
 ## 部署狀態
 
-| 項目            | 狀態                                                                                                                                     |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| 正式網址        | `https://reproute.ciren22007524.workers.dev`                                                                                             |
-| 自動部署        | Cloudflare Workers Builds 連接本 repo，合併到 `main` 就部署                                                                              |
-| 登入            | Cloudflare Access（Google 登入，Scope All traffic，policy `only-me`）                                                                    |
-| `main` 分支保護 | 需要 PR、禁止 force push 與刪除、approvals 0                                                                                             |
-| PR 預覽建置     | **一直失敗**，與程式無關；推測是 Preview command `npx wrangler preview`（beta），建議使用者改成 `npx wrangler versions upload`，尚未處理 |
-| 開發環境        | `.devcontainer/` 支援 GitHub Codespaces                                                                                                  |
+| 項目            | 狀態                                                                   |
+| --------------- | ---------------------------------------------------------------------- |
+| 正式網址        | `https://reproute.ciren22007524.workers.dev`                           |
+| 自動部署        | Cloudflare Workers Builds 連接本 repo，合併到 `main` 就部署            |
+| 登入            | Cloudflare Access（Google 登入，Scope All traffic，policy `only-me`）  |
+| `main` 分支保護 | 需要 PR、禁止 force push 與刪除、approvals 0                           |
+| PR 預覽建置     | PR #8 的 Workers Builds 失敗，原因尚未取得；舊紀錄懷疑預覽指令，未確認 |
+| 開發環境        | `.devcontainer/` 支援 GitHub Codespaces                                |
 
 ## 已完成
 
@@ -33,24 +32,24 @@
 | 廠區清點   | 新增廠區、逐項記數量、啞鈴等記最重重量、搜尋、只顯示已勾選、匯出 JSON；存在 IndexedDB | `src/pages/Gym*.vue`、`src/components/inventory/` |
 | 登入驗證   | Worker 驗證 Access 的 JWT（簽章、iss、aud、exp），`GET /api/me`；14 個測試            | `worker/auth/`、`worker/app.ts`                   |
 | 帳號選單   | 右上角顯示登入的 email 與狀態                                                         | `src/components/layout/AccountMenu.vue`           |
-| 其他分頁   | 今日訓練、課表、紀錄目前只有預告畫面                                                  | `src/pages/`                                      |
+| 其他分頁   | 今日訓練、紀錄為預告；課表提供動作資料庫入口，手動課表待開發                          | `src/pages/`                                      |
+
+JSON 備份還原已合併（PR #9）；動作資料庫本機整合驗證共 46 個測試、型別、lint、格式與 PWA 建置通過，Chromium 390 × 844 實測搜尋、廠區／模式篩選、替代動作與載入後離線查詢，無頁面例外。正式部署尚未驗收。
 
 ## 下一步
 
-### 1. 改用 auth-service 登入（等 auth-service 部署完成）
+### 1. auth-service 登入切換待正式環境驗收
 
-auth-service 還在等使用者完成 Google OAuth 與 Cloudflare 設定，進度見 `Ciren22007524/auth-service` 的 `docs/STATUS.md`。部署後 RepRoute 要做：
+PR #8（`feature-auth-service`）已實作登入、callback、記憶體 token、續期、Bearer API 與登出；先前本機 47 個測試通過。Cloudflare Workers Builds 失敗原因尚未取得，不將舊文件的預覽指令推測當成已確認根因。
 
-1. 網址搬到 `reproute.cirenjhong.com`（refresh cookie 是 `SameSite=Lax`，必須同站）
-2. `wrangler.jsonc` 的 `AUTH_*` 改成 auth-service：issuer / JWKS 指向 `https://auth.cirenjhong.com`，`AUTH_AUDIENCE=reproute`，`AUTH_TOKEN_HEADER=Authorization`
-3. 前端：啟動時 `POST /token` 換 access token；401 時導到 `/authorize`；新增 `/auth/callback` 頁；API 帶 `Authorization: Bearer`；access token 只放記憶體
-4. `useCurrentUser` 改用新流程；登出呼叫 auth-service 的 `/logout`
-5. 正式站移除 Cloudflare Access（預覽網址可保留）
+使用者仍需確認正式網域 `reproute.cirenjhong.com`、auth-service Google OAuth／D1／端點設定，完成正式登入驗收後才切換。具體流程見 PR #8 的 `docs/auth-integration.md`。
 
 ### 2. 之後的功能（依 `docs/requirements.md` 開發階段）
 
-- JSON 匯入：PR #9 已完成驗證，合併後可使用；匯入前預覽與驗證，一律新增副本、不覆蓋既有廠區。手機實測確認重複匯入、重新整理保存與匯出往返。
-- v0.1 剩下：動作資料庫、手動建課表、訓練中紀錄、D1 同步（資料表要有 `user_id`）
+- JSON 匯入：PR #9 已合併至 `main`，正式部署尚未確認；匯入前預覽與驗證，一律新增副本、不覆蓋既有廠區。手機實測確認重複匯入、重新整理保存與匯出往返。
+- 動作資料庫：`feature-exercise-catalog` 已完成 21 個內建動作、動作模式／肌群搜尋、廠區器材篩選與同模式替代動作。資料規則與來源見 `docs/exercises.md`。
+- 手動建課表：待使用者定案基本單位是多日課表，還是每份獨立的單堂課表；兩者會影響資料模型與編輯流程。
+- v0.1 剩下：手動建課表、訓練中紀錄、D1 同步（資料表要有 `user_id`）；依需求，在開始累積正式訓練紀錄前完成登入與同步。
 - v0.2：器材被占用時推薦替代動作與重排（核心功能）
 
 ## 待處理
