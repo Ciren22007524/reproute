@@ -4,12 +4,12 @@ interface Env {
   ASSETS: Fetcher;
 
   // 登入驗證（見 worker/auth/config.ts）
-  /** token 簽發者，例如 https://<team>.cloudflareaccess.com */
+  /** token 簽發者，例如 https://auth.cirenjhong.com */
   AUTH_ISSUER: string;
-  /** 公開金鑰網址，例如 https://<team>.cloudflareaccess.com/cdn-cgi/access/certs */
+  /** 公開金鑰網址，例如 https://auth.cirenjhong.com/jwks */
   AUTH_JWKS_URL: string;
-  /** 這個服務的識別；Cloudflare Access 時填應用程式的 AUD tag */
+  /** 這個服務的 client_id：reproute */
   AUTH_AUDIENCE: string;
-  /** token 所在的標頭；Cloudflare Access 是 Cf-Access-Jwt-Assertion */
+  /** token 所在的標頭；auth-service 使用 Authorization: Bearer */
   AUTH_TOKEN_HEADER: string;
 }

@@ -7,14 +7,14 @@ import { createApp } from '../app';
 import { readAuthConfig } from './config';
 import { extractToken } from './verify';
 
-const ISSUER = 'https://team.cloudflareaccess.com';
-const AUDIENCE = 'aud-tag-123';
+const ISSUER = 'https://auth.cirenjhong.com';
+const AUDIENCE = 'reproute';
 
 const env = {
   AUTH_ISSUER: ISSUER,
-  AUTH_JWKS_URL: `${ISSUER}/cdn-cgi/access/certs`,
+  AUTH_JWKS_URL: `${ISSUER}/jwks`,
   AUTH_AUDIENCE: AUDIENCE,
-  AUTH_TOKEN_HEADER: 'Cf-Access-Jwt-Assertion',
+  AUTH_TOKEN_HEADER: 'Authorization',
 } as unknown as Env;
 
 let privateKey: CryptoKey;
@@ -22,11 +22,11 @@ let otherPrivateKey: CryptoKey;
 let app: ReturnType<typeof createApp>;
 
 beforeAll(async () => {
-  const pair = await generateKeyPair('RS256');
+  const pair = await generateKeyPair('ES256');
   privateKey = pair.privateKey;
-  otherPrivateKey = (await generateKeyPair('RS256')).privateKey;
+  otherPrivateKey = (await generateKeyPair('ES256')).privateKey;
 
-  const jwk: JWK = { ...(await exportJWK(pair.publicKey)), kid: 'key-1', alg: 'RS256' };
+  const jwk: JWK = { ...(await exportJWK(pair.publicKey)), kid: 'key-1', alg: 'ES256' };
   const jwks = createLocalJWKSet({ keys: [jwk] });
   app = createApp({ getKey: () => jwks });
 });
@@ -37,7 +37,7 @@ function sign(
   key: CryptoKey = privateKey,
 ) {
   const jwt = new SignJWT({ email: 'me@gmail.com' })
-    .setProtectedHeader({ alg: 'RS256', kid: 'key-1' })
+    .setProtectedHeader({ alg: 'ES256', kid: 'key-1' })
     .setIssuer(overrides.iss ?? ISSUER)
     .setAudience(overrides.aud ?? [AUDIENCE])
     .setIssuedAt()
@@ -47,7 +47,7 @@ function sign(
 }
 
 function getMe(token?: string, requestEnv: Env = env) {
-  const headers = token ? { 'Cf-Access-Jwt-Assertion': token } : undefined;
+  const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
   return app.request('/api/me', headers ? { headers } : {}, requestEnv);
 }
 
@@ -55,6 +55,7 @@ describe('GET /api/me', () => {
   it('回傳已驗證的使用者', async () => {
     const res = await getMe(await sign());
     expect(res.status).toBe(200);
+    expect(res.headers.get('cache-control')).toBe('no-store');
     expect(await res.json()).toEqual({ id: 'user-abc', email: 'me@gmail.com' });
   });
 
@@ -106,6 +107,43 @@ describe('GET /api/me', () => {
       env,
     );
     expect(res.status).toBe(401);
+  });
+});
+
+describe('auth-service 必要欄位與標頭', () => {
+  it.each(['email', 'iat', 'exp', 'sub'])('缺少 %s 時拒絕', async (claim) => {
+    const payload: Record<string, unknown> = {
+      iss: ISSUER,
+      aud: AUDIENCE,
+      sub: 'usr_1',
+      email: 'me@gmail.com',
+      iat: Math.floor(Date.now() / 1000),
+      exp: Math.floor(Date.now() / 1000) + 900,
+    };
+    delete payload[claim];
+    const token = await new SignJWT(payload)
+      .setProtectedHeader({ alg: 'ES256', kid: 'key-1' })
+      .sign(privateKey);
+    expect((await getMe(token)).status).toBe(401);
+  });
+  it.each([null, 123, '', '  '])('email 型別或內容無效時拒絕：%s', async (email) => {
+    const token = await new SignJWT({ email })
+      .setProtectedHeader({ alg: 'ES256', kid: 'key-1' })
+      .setIssuer(ISSUER)
+      .setAudience(AUDIENCE)
+      .setSubject('usr_1')
+      .setIssuedAt()
+      .setExpirationTime('15m')
+      .sign(privateKey);
+    expect((await getMe(token)).status).toBe(401);
+  });
+  it('不從舊 Access 標頭接受登入身分', async () => {
+    const response = await app.request(
+      '/api/me',
+      { headers: { 'Cf-Access-Jwt-Assertion': await sign() } },
+      env,
+    );
+    expect(response.status).toBe(401);
   });
 });
 

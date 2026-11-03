@@ -23,7 +23,7 @@ Quasar（Vue 3 + TypeScript）PWA ・ Hono on Cloudflare Workers ・ pnpm
 pnpm install
 pnpm dev            # 前端開發伺服器（Quasar，PWA 模式，port 9200）
 pnpm typecheck      # 前端 + Worker 型別檢查
-pnpm test           # 單元測試（目前是 Worker 的登入驗證）
+pnpm test           # 單元測試（Worker JWT 與瀏覽器登入流程）
 pnpm lint           # ESLint 檢查並自動修正
 pnpm format         # Prettier 排版所有檔案
 pnpm worker:dev     # 打包後用 Wrangler 在本機跑完整的 Worker（前端 + /api，port 8787）
@@ -38,7 +38,7 @@ pnpm wrangler login
 pnpm deploy       # quasar build + wrangler deploy
 ```
 
-部署後在 Worker 的 **Access** 分頁開啟 Cloudflare Access（Scope 選 **All traffic**），登入方式設為 **Google**，policy 只允許白名單內的帳號。詳細步驟見 [docs/requirements.md 的「登入與使用者」](docs/requirements.md#登入與使用者)。
+正式站使用 `https://reproute.cirenjhong.com`，登入串接 `auth.cirenjhong.com`。網域、auth-service 前置條件、Access 切換與回退步驟見 [登入串接與切換](docs/auth-integration.md)；預覽網址可保留 Access。localhost／workers.dev 不支援目前的同站登入流程。
 
 ## 流程圖
 

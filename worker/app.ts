@@ -16,7 +16,10 @@ export function createApp(authOptions: AuthMiddlewareOptions = {}) {
       // 公開：健康檢查，不需要登入
       .get('/health', (c) => c.json({ ok: true, service: 'reproute' }))
       // 需要登入：目前的使用者
-      .get('/me', auth, (c) => c.json(c.var.user))
+      .get('/me', auth, (c) => {
+        c.header('Cache-Control', 'no-store');
+        return c.json(c.var.user);
+      })
   );
 }
 
