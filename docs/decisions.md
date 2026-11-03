@@ -17,3 +17,4 @@
 | 2026-10-27 | 登入改用自己的 `auth-service`，正式站不再用 Cloudflare Access                                   | 使用者不希望別人看出服務架在 Cloudflare 上（Access 的網址與 Google 同意畫面會露出）                 | Access + 自訂網域與 Instant Auth                    |
 | 2026-10-29 | 分支一律 `feature-<描述>`，從 `main` 開、PR 合併回來                                            | 使用者指定的流程                                                                                    | `feat/`、`docs/`、`fix/` 等前綴                     |
 | 2026-11-02 | 共同規則寫在 `AGENTS.md`，`CLAUDE.md` 只匯入；規則由 Claude Code 維護；格式與 auth-service 一致 | 使用者同時用 Claude Code 與 Codex，兩邊讀同一份規則才不會產出不同風格                               | `CLAUDE.md` 與 `AGENTS.md` 各寫一份（久了會不一致） |
+| 2026-11-03 | Codex 完成必要檢查後，可建立並合併自己負責的 PR 到 `main`                                       | 使用者於串接 auth-service 時明確授權；仍透過 PR 並遵守分支保護                                      | 每次合併重複要求確認、直接 push main                |
