@@ -40,6 +40,10 @@ pnpm deploy       # quasar build + wrangler deploy
 
 部署後在 Worker 的 **Access** 分頁開啟 Cloudflare Access（Scope 選 **All traffic**），登入方式設為 **Google**，policy 只允許白名單內的帳號。詳細步驟見 [docs/requirements.md 的「登入與使用者」](docs/requirements.md#登入與使用者)。
 
+## 手動課表
+
+「課表 → 新增課表」可選單堂或多日模式，編輯動作順序、組數及每組次數／秒數，手動儲存到這台裝置。操作與保存範圍見 [docs/plans.md](docs/plans.md)。
+
 ## 備份與動作查詢
 
 - 廠區清點頁可匯出 JSON；廠區清單的「匯入廠區備份」可預覽並還原成新副本，不覆蓋原有廠區。
