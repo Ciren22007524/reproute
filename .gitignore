@@ -162,6 +162,7 @@ vite.config.ts.timestamp-*
 .wrangler/
 .dev.vars
 .dev.vars.*
+!.dev.vars.example
 
 # 個人訓練資料（不要 commit）
 data/personal/

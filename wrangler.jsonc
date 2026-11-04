@@ -3,6 +3,8 @@
   "name": "reproute",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
+  // 一般變數由 Cloudflare 後台管理，部署時保留；不要在 vars 重複宣告同名值。
+  "keep_vars": true,
   "assets": {
     // Quasar PWA 打包輸出
     "directory": "./dist/pwa",
@@ -14,18 +16,8 @@
   "observability": {
     "enabled": true,
   },
-  // 登入驗證（見 worker/auth/）。不是機密，但每個 Cloudflare 帳號不同。
-  // 沒填時 /api/me 等需要登入的 API 一律回 500（不會變成公開）。
-  // 換成自己的登入服務（docs/auth-service.md）時，只要改這幾個值。
-  "vars": {
-    // Access 的 team domain。最可靠的確認方式：登入時網址列 state 參數裡的 authDomain，
-    // 或 Zero Trust → Settings → Custom Pages / General 的「Team domain」
-    "AUTH_ISSUER": "https://snowy-flower-d598.cloudflareaccess.com",
-    "AUTH_JWKS_URL": "https://snowy-flower-d598.cloudflareaccess.com/cdn-cgi/access/certs",
-    // Zero Trust → Access → Applications → reproute → Overview 的「Application Audience (AUD) Tag」
-    "AUTH_AUDIENCE": "c1299dedeba5a5a7f611a241cf1529e42e99f4bd0cfde2ce70cf7df549ed6c62",
-    "AUTH_TOKEN_HEADER": "Cf-Access-Jwt-Assertion",
-  },
+  // AUTH_* 等執行期變數：Cloudflare → Worker → Settings → Variables and Secrets。
+  // 本機用 .dev.vars（見 .dev.vars.example）；缺少驗證設定時 API 仍拒絕存取。
   // 之後需要同步紀錄時再開：
   // "d1_databases": [{ "binding": "DB", "database_name": "reproute", "database_id": "<填入>" }]
 }

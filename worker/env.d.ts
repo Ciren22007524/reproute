@@ -1,5 +1,5 @@
 // Worker 的綁定與環境變數（D1、KV、Secrets、vars 等）。
-// 在 wrangler.jsonc 新增後，同步補在這裡。
+// 執行期變數在 Cloudflare 後台設定；此處只定義型別，不含實際值。
 interface Env {
   ASSETS: Fetcher;
 
