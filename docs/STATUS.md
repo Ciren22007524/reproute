@@ -8,12 +8,12 @@
 
 開始工作時加一列，合併前移除，避免 Claude Code 與 Codex 同時做同一件事（規則見 `AGENTS.md`「多個 AI 工具一起開發」）。
 
-| 分支                             | 工具  | 在做什麼                                           |
-| -------------------------------- | ----- | -------------------------------------------------- |
-| feature-auth-service             | Codex | PR #8 已轉草稿；登入按雲端功能選用，不作全站前提   |
-| feature-local-workouts           | Codex | PR #12 免登入訓練已驗證，Workers Builds 失敗待診斷 |
-| feature-full-backup              | Codex | PR #13 完整備份草稿，依賴 PR #12                   |
-| feature-preserve-cloudflare-vars | Codex | 保留後台變數與機密，dry-run 已通過，待 PR          |
+| 分支                             | 工具  | 在做什麼                                            |
+| -------------------------------- | ----- | --------------------------------------------------- |
+| feature-auth-service             | Codex | PR #8 已轉草稿；登入按雲端功能選用，不作全站前提    |
+| feature-local-workouts           | Codex | PR #12 免登入訓練已驗證，Workers Builds 失敗待診斷  |
+| feature-full-backup              | Codex | PR #13 完整備份草稿，依賴 PR #12                    |
+| feature-preserve-cloudflare-vars | Codex | PR #14：dry-run 通過，Workers Builds 失敗，尚未合併 |
 
 ## 部署狀態
 
