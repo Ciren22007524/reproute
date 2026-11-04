@@ -1,67 +1,57 @@
 # RepRoute 進度與交接
 
-> 更新：2026-11-04。每次工作告一段落時更新這份文件；新的 session 先讀這份和 `AGENTS.md`（Claude Code 與 Codex 共用的規則）。
+> 更新：2026-11-04。本次以 Git、GitHub PR 與最新 main 重跑檢查查證。專案規則在 `AGENTS.md`，`CLAUDE.md` 僅匯入同一份規則。
 
-**目前已合併：廠區器材清點與 JSON 匯出／匯入。** 動作資料庫已合併；雙模式課表已完成開發與本機驗證，正式部署結果尚未確認。新登入流程另見 PR #8，尚未切換。
+## 已合併與未合併的界線
 
-## 進行中
+目前 `main` 為 `7860b32dee1c7697363a1f7585714961e46ed776`，已合併廠區清點、單一廠區 JSON 匯入／匯出（PR #9）、21 個內建動作與器材篩選（PR #10）、單堂／多日課表（PR #11）。IndexedDB 目前 main 到 version 2。
 
-開始工作時加一列，合併前移除，避免 Claude Code 與 Codex 同時做同一件事（規則見 `AGENTS.md`「多個 AI 工具一起開發」）。
+main 的今日訓練、歷史頁仍為預告，啟動時仍透過舊帳號選單呼叫 `/api/me`。免登入訓練、完整備份與後台變數保留都還在待合併 PR，不可當作已上線。
 
-| 分支                 | 工具  | 在做什麼                                            |
-| -------------------- | ----- | --------------------------------------------------- |
-| feature-auth-service | Codex | PR #8：登入串接待 Cloudflare 建置診斷與正式設定驗收 |
+## 進行中與 PR
 
-## 部署狀態
+| 分支                               | PR                                                       | 狀態與負責工具                                                                    |
+| ---------------------------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `feature-preserve-cloudflare-vars` | [#14](https://github.com/Ciren22007524/reproute/pull/14) | Codex；後台變數保留，最新已查 head `007c4ae` 的 Workers Builds 失敗；本次交接任務 |
+| `feature-local-workouts`           | [#12](https://github.com/Ciren22007524/reproute/pull/12) | Codex；免登入訓練，head `ec6aa9f` 的 Workers Builds 失敗，尚未合併                |
+| `feature-full-backup`              | [#13](https://github.com/Ciren22007524/reproute/pull/13) | Codex；完整備份草稿，head `1ed9eb7`；包含並依賴 #12，Workers Builds 失敗          |
+| `feature-auth-service`             | [#8](https://github.com/Ciren22007524/reproute/pull/8)   | Codex；草稿，舊全站登入串接，不應直接作為免登入工具的入口                         |
+| `feature-handoff`                  | 本次文件 PR                                              | Codex；更新進度並交接 PR #14，不改程式或 Cloudflare 後台                          |
 
-| 項目            | 狀態                                                                   |
-| --------------- | ---------------------------------------------------------------------- |
-| 正式網址        | `https://reproute.ciren22007524.workers.dev`                           |
-| 自動部署        | Cloudflare Workers Builds 連接本 repo，合併到 `main` 就部署            |
-| 登入            | Cloudflare Access（Google 登入，Scope All traffic，policy `only-me`）  |
-| `main` 分支保護 | 需要 PR、禁止 force push 與刪除、approvals 0                           |
-| PR 預覽建置     | PR #8 的 Workers Builds 失敗，原因尚未取得；舊紀錄懷疑預覽指令，未確認 |
-| 開發環境        | `.devcontainer/` 支援 GitHub Codespaces                                |
+## 最新方向與文件落差
 
-## 已完成
+PR #12／#13 分支的 `docs/decisions.md` 已記錄 2026-11-04 決策：本機功能免登入；Google Drive 檔案權限獨立授權；iCloud 先以系統檔案匯出／匯入；使用自家雲端才選用 auth-service。登入或 D1 不再是本機訓練紀錄的前提。
 
-| 項目       | 說明                                                                                  | 位置                                              |
-| ---------- | ------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| 專案骨架   | Quasar PWA + Hono Worker；ESLint、Prettier、Vitest                                    | —                                                 |
-| 器材主清單 | 72 項，7 個分類                                                                       | `data/equipment-catalog.json`                     |
-| 廠區清點   | 新增廠區、逐項記數量、啞鈴等記最重重量、搜尋、只顯示已勾選、匯出 JSON；存在 IndexedDB | `src/pages/Gym*.vue`、`src/components/inventory/` |
-| 登入驗證   | Worker 驗證 Access 的 JWT（簽章、iss、aud、exp），`GET /api/me`；14 個測試            | `worker/auth/`、`worker/app.ts`                   |
-| 帳號選單   | 右上角顯示登入的 email 與狀態                                                         | `src/components/layout/AccountMenu.vue`           |
-| 其他分頁   | 今日訓練、紀錄為預告；課表提供動作資料庫與單堂／多日編輯；今日訓練與紀錄待開發        | `src/pages/`                                      |
+這項新決策尚未隨 #12 合併進 main 的決策文件。因此 main 的 `docs/requirements.md`、`docs/plans.md` 與 README 中強制 Access／D1 的舊敘述存在落差，接手時應核對功能分支，不要繼續把登入當作本機使用前提。這次交接只處理 #14；其他文件與功能隨對應 PR 整合。
 
-JSON 備份還原已合併（PR #9）；動作資料庫本機整合驗證共 46 個測試、型別、lint、格式與 PWA 建置通過，Chromium 390 × 844 實測搜尋、廠區／模式篩選、替代動作與載入後離線查詢，無頁面例外。正式部署尚未驗收。
+## 本次交接：部署保留 Cloudflare 變數（PR #14）
 
-## 下一步
+PR #14 已加入 `keep_vars: true`、移除設定檔寫死的 `AUTH_*` 值、新增空白 `.dev.vars.example` 與對應忽略例外；驗證邏輯只有來源註解變更，缺少設定仍拒絕 API 存取。
 
-### 1. auth-service 登入切換待正式環境驗收
+已安裝的 Wrangler schema 明確說明：預設依設定檔覆蓋／刪除一般變數，`keep_vars` 用來保留後台一般變數。同名值若再次放進 `vars`，仍可能覆蓋後台。Worker 執行期變數、Builds 建置變數與前端公開設定是不同層次；Google Web Client Secret 不得進前端，現行瀏覽器授權方案也不需要它。
 
-PR #8（`feature-auth-service`）已實作登入、callback、記憶體 token、續期、Bearer API 與登出；先前本機 47 個測試通過。Cloudflare Workers Builds 失敗原因尚未取得，不將舊文件的預覽指令推測當成已確認根因。
+外部阻礙：PR #14 的最新已查 Cloudflare 建置失敗，GitHub 僅提供建置連結，沒有根因訊息。需使用者提供該次建置最後的錯誤紀錄或已確認的建置／部署命令；不能將舊文件對 preview 指令的猜測當成根因。後台實際變數、機密與正式部署均未由本次交接讀取或驗證。
 
-使用者仍需確認正式網域 `reproute.cirenjhong.com`、auth-service Google OAuth／D1／端點設定，完成正式登入驗收後才切換。具體流程見 PR #8 的 `docs/auth-integration.md`。
+具體範圍、接手步驟與完成條件見 `docs/handoff.md`。
 
-### 2. 之後的功能（依 `docs/requirements.md` 開發階段）
+## 本次最新 main 檢查
 
-- JSON 匯入：PR #9 已合併至 `main`，正式部署尚未確認；匯入前預覽與驗證，一律新增副本、不覆蓋既有廠區。手機實測確認重複匯入、重新整理保存與匯出往返。
-- 動作資料庫：PR #10 已合併，包含 21 個內建動作、動作模式／肌群搜尋、廠區器材篩選與同模式替代動作。資料規則與來源見 `docs/exercises.md`。
-- 手動建課表：使用者已定案兩種模式都支援、建立時自行選擇。PR #11 已完成單堂／多日編輯、目標、排序與本機儲存，詳見 `docs/plans.md`。60 個測試及手機、雙分頁、儲存失敗與桌面拖曳實測通過，合併後可使用。
-- v0.1 剩下：訓練中紀錄、D1 同步（資料表要有 `user_id`）；依需求，在開始累積正式訓練紀錄前完成登入與同步。
-- v0.2：器材被占用時推薦替代動作與重排（核心功能）
+基準 `7860b32`；Node `24.19.0`、pnpm `10.28.0`。2026-11-04 本次實際重跑：
 
-## 待處理
+| 指令                | 結果                            |
+| ------------------- | ------------------------------- |
+| `pnpm typecheck`    | 通過                            |
+| `pnpm lint:check`   | 通過                            |
+| `pnpm format:check` | 通過                            |
+| `pnpm test`         | 4 個檔案、60 個測試通過         |
+| `pnpm build`        | PWA build 通過，輸出 `dist/pwa` |
 
-- 後續正式訓練紀錄依需求先完成登入與 D1 同步。目前 `wrangler.jsonc` 的 D1 綁定仍是註解，需使用者在 Cloudflare 確認／建立資料庫與提供非機密 database_name／database_id；auth-service 正式登入與網域設定也仍待確認。
-- 課表目前只有本機儲存，廠區 JSON 備份不包含課表，尚未提供課表備份與同步。
+PR 描述另外記錄 #12 的 75 個測試、#13 的 89 個測試與手機實測、#14 的部署 dry-run 通過；這些屬各 PR 的先前紀錄，本次未在三個功能分支重跑，不等同正式環境驗收。
 
-- PR 預覽建置失敗（見上表），需要使用者改 Cloudflare 的 Preview command
-- PWA 加到主畫面：已加 `useCredentialsForManifestTag`，使用者尚未實測
-- 刪除舊命名的已合併分支（`refactor/component-split`、`docs/*`、`feat/api-me`、`fix/access-login`）：雲端環境不允許刪除遠端分支，需要使用者在 GitHub 刪除
+## 尚未完成
 
-## 文件說明
-
-- `docs/requirements.md` 的「登入與使用者」寫的是 Access 方案，**已由 auth-service 取代**（見 `docs/decisions.md`）
-- `docs/auth-service.md` 是登入服務的早期設計，**以 `auth-service` repo 的 `docs/design.md` 為準**
+- 排除 Cloudflare 建置阻礙，先處理 #14；不得略過失敗檢查或以管理員方式強制合併。
+- #12 與 #13 的驗證、衝突處理與依序整合，另行安排；不要與本次部署設定交接混做。
+- Google Drive 授權與備份尚未實作；正式 origin、公開 Web Client ID、Google 後台設定是否已完成均待確認，勿索取 Client Secret。
+- 原生 Android／iOS、雲端同步、器材占用時整堂課重排尚未完成。
+- 正式 DNS、Access、Google OAuth 與遠端部署狀態未即時驗證；不要自行改後台防護。
