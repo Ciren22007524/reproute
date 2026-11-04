@@ -8,9 +8,12 @@
 
 開始工作時加一列，合併前移除，避免 Claude Code 與 Codex 同時做同一件事（規則見 `AGENTS.md`「多個 AI 工具一起開發」）。
 
-| 分支                 | 工具  | 在做什麼                                            |
-| -------------------- | ----- | --------------------------------------------------- |
-| feature-auth-service | Codex | PR #8：登入串接待 Cloudflare 建置診斷與正式設定驗收 |
+| 分支                             | 工具  | 在做什麼                                           |
+| -------------------------------- | ----- | -------------------------------------------------- |
+| feature-auth-service             | Codex | PR #8 已轉草稿；登入按雲端功能選用，不作全站前提   |
+| feature-local-workouts           | Codex | PR #12 免登入訓練已驗證，Workers Builds 失敗待診斷 |
+| feature-full-backup              | Codex | PR #13 完整備份草稿，依賴 PR #12                   |
+| feature-preserve-cloudflare-vars | Codex | 保留後台變數與機密，dry-run 已通過，待 PR          |
 
 ## 部署狀態
 
@@ -65,3 +68,7 @@ PR #8（`feature-auth-service`）已實作登入、callback、記憶體 token、
 
 - `docs/requirements.md` 的「登入與使用者」寫的是 Access 方案，**已由 auth-service 取代**（見 `docs/decisions.md`）
 - `docs/auth-service.md` 是登入服務的早期設計，**以 `auth-service` repo 的 `docs/design.md` 為準**
+
+## 部署變數保留（2026-11-04）
+
+`keep_vars: true` 搭配移除設定檔內的 `AUTH_*` 值，避免後續部署刪除後台一般變數或以舊值覆寫。同名設定不得再次寫入 `vars`。本機採 `.dev.vars`，缺少驗證值仍 fail closed。型別、lint、60 個測試、PWA build 與 Wrangler deploy dry-run 通過；未操作後台值、未遠端部署。Google Web Client Secret 不進前端，也不是目前瀏覽器 Drive 授權所需設定。

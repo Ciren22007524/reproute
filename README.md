@@ -49,6 +49,17 @@ pnpm deploy       # quasar build + wrangler deploy
 - 廠區清點頁可匯出 JSON；廠區清單的「匯入廠區備份」可預覽並還原成新副本，不覆蓋原有廠區。
 - 「課表 → 瀏覽動作資料庫」提供 21 個內建動作，可搜尋名稱／肌群、篩選動作模式及廠區器材，查看器材與替代動作。資料說明見 [docs/exercises.md](docs/exercises.md)。
 
+## Cloudflare 變數與機密
+
+Worker 執行期變數由 **Workers & Pages → RepRoute → Settings → Variables and Secrets** 管理。`wrangler.jsonc` 使用 `keep_vars: true`，並不再宣告 `AUTH_*` 的值，部署時保留後台一般變數；Worker Secrets 也不寫入版本控制。未來不要在 `vars` 加入後台管理的同名設定，否則明確宣告的值仍可能覆蓋後台。
+
+- `AUTH_ISSUER`、`AUTH_JWKS_URL`、`AUTH_AUDIENCE`、`AUTH_TOKEN_HEADER`：保護 `/api/me` 的執行期設定。缺少時仍拒絕存取，不因移除設定檔值而公開 API。
+- `GOOGLE_WEB_CLIENT_ID`：公開 Client ID，可用一般變數；Google Drive 連接尚待後續實作，本 PR 不會自動把 Worker 變數送到前端。
+- `GOOGLE_WEB_CLIENT_SECRET`：若另有後端用途才需要，以 Secret 保存；目前瀏覽器授權流程不需要。不得加上前端公開前綴或放進 Quasar 的公開 build env。
+- 本機可複製 `.dev.vars.example` 為 `.dev.vars`，自行填入設定；`.dev.vars` 保持忽略，不提交。
+
+`keep_vars` 保留的是 Worker 的一般執行期變數，不代表前端自動取得設定，也不替代 Cloudflare Builds 的建置變數設定；D1、Service Binding 等仍依部署設定管理。此變更不讀取、不改寫後台實際值，也不執行遠端部署。
+
 ## 流程圖
 
 ### 請求怎麼走
