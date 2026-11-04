@@ -40,6 +40,10 @@ pnpm deploy       # quasar build + wrangler deploy
 
 部署後在 Worker 的 **Access** 分頁開啟 Cloudflare Access（Scope 選 **All traffic**），登入方式設為 **Google**，policy 只允許白名單內的帳號。詳細步驟見 [docs/requirements.md 的「登入與使用者」](docs/requirements.md#登入與使用者)。
 
+## 本機使用
+
+器材清點、課表與訓練紀錄不需登入。今日訓練可選課表開始，保存各組重量、次數／秒數與 RIR／RPE，結束後在紀錄查看。操作與資料保護見 [docs/workouts.md](docs/workouts.md)。Google Drive、自家雲端登入均是之後按功能選用的連接，不是本機使用前提。
+
 ## 手動課表
 
 「課表 → 新增課表」可選單堂或多日模式，編輯動作順序、組數及每組次數／秒數，手動儲存到這台裝置。操作與保存範圍見 [docs/plans.md](docs/plans.md)。
