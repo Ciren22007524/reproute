@@ -20,6 +20,11 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     component: () => import('@/layouts/MainLayout.vue'),
     children: [
+      {
+        path: 'backup',
+        component: () => import('@/pages/BackupPage.vue'),
+        meta: { title: '備份與還原', back: true },
+      },
       { path: '', component: () => import('@/pages/TodayPage.vue'), meta: { title: '今日訓練' } },
       { path: 'plans', component: () => import('@/pages/PlansPage.vue'), meta: { title: '課表' } },
       {
