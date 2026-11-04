@@ -1,0 +1,6 @@
+# 僅供本機 wrangler dev；複製為 .dev.vars 後填入自己的設定。
+# 正式環境由 Cloudflare 後台管理，不把任何 Secret 寫進這份範例。
+AUTH_ISSUER=
+AUTH_JWKS_URL=
+AUTH_AUDIENCE=
+AUTH_TOKEN_HEADER=Cf-Access-Jwt-Assertion

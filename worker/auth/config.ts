@@ -1,5 +1,5 @@
 /**
- * 讀取登入驗證的設定（來自 wrangler.jsonc 的 vars）。
+ * 讀取登入驗證設定（正式環境由 Cloudflare 後台管理，本機來自 .dev.vars）。
  *
  * 驗證程式本身是通用的：現在指向 Cloudflare Access，
  * 之後換成自己的登入服務（docs/auth-service.md）時只要改這些設定。
