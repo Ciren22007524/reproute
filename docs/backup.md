@@ -20,3 +20,11 @@
 - 已刪除的資料不進入備份。本功能不是清空後還原，也沒有自動同步或加密服務。
 
 Google Drive 尚待正式網址與 Web OAuth Client ID 設定。可共用 auth-service 的 Web Client，但需保留原回呼並加入 RepRoute 的已授權 JavaScript 來源；為獨立移除與維護，建議建立 RepRoute 專用 Client。前端只使用公開 Client ID，不使用 Client Secret 或服務帳戶金鑰；登入授權不等於 Drive 檔案授權。
+
+## Google Drive 接入前設定（尚未實作連接）
+
+1. Google Cloud Console 選專案，啟用 Google Drive API。
+2. Google Auth Platform → Clients：可編輯現有的 Web application，或新增 RepRoute 專用 Web application。建議獨立 Client，日後撤銷與移除登入服務時較易管理。
+3. 在已授權 JavaScript 來源加入 RepRoute 正式 HTTPS origin（只有協定與網域，不含路徑）。若共用 auth-service Client，保留它原有的 authorized redirect URI。
+4. 確認 OAuth 同意畫面與測試使用者。Drive 檔案權限與身分登入是不同授權，後續接入只要求必要的檔案 scope。
+5. 提供公開 Client ID 與正式 origin 即可繼續實作；不提供 Client Secret 或服務帳戶金鑰。這裡未聲稱已能連接或同步 Google Drive。
