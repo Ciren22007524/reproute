@@ -8,10 +8,12 @@
 import Dexie, { type EntityTable } from 'dexie';
 import type { Gym } from '@/types/domain';
 import type { TrainingPlan } from '@/types/plan';
+import type { Workout } from '@/types/workout';
 
 export const db = new Dexie('reproute') as Dexie & {
   gyms: EntityTable<Gym, 'id'>;
   plans: EntityTable<TrainingPlan, 'id'>;
+  workouts: EntityTable<Workout, 'id'>;
 };
 
 // 資料表與索引。之後改結構時要新增 db.version(2)，不能直接改這裡。
@@ -22,4 +24,9 @@ db.version(1).stores({
 // 新增課表資料表，保留 version(1) 的廠區資料與索引。
 db.version(2).stores({
   plans: 'id, updatedAt',
+});
+
+// 本機訓練紀錄，升級不改動既有廠區與課表。
+db.version(3).stores({
+  workouts: 'id, status, startedAt, updatedAt',
 });

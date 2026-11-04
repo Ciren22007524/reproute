@@ -46,6 +46,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/pages/HistoryPage.vue'),
         meta: { title: '紀錄' },
       },
+      {
+        path: 'history/:id',
+        component: () => import('@/pages/WorkoutDetailPage.vue'),
+        props: true,
+        meta: { title: '訓練紀錄', back: true },
+      },
     ],
   },
 
